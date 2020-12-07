@@ -1,0 +1,6 @@
+name = "bunny"
+type = "webpack"
+account_id = "85fad368ff87a470ab16c64b0197fce6"
+workers_dev = true
+route = ""
+zone_id = ""
