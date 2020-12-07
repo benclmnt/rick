@@ -1,0 +1,19 @@
+{
+  "private": true,
+  "name": "bunny",
+  "version": "1.0.0",
+  "description": "Browser redirector",
+  "main": "index.js",
+  "scripts": {
+    "start": "RUST_BACKTRACE=1 wrangler dev",
+    "test": "echo \"Error: no test specified\" && exit 1",
+    "format": "prettier --write '**/*.{js,css,json,md}'"
+  },
+  "author": "Bennett Clement <ben@benclmnt.com>",
+  "license": "MIT",
+  "devDependencies": {
+    "prettier": "^1.18.2",
+    "url-parse": "^1.4.7"
+  },
+  "dependencies": {}
+}
