@@ -1,0 +1,19 @@
+{
+  "g": {
+    "_leaf": {
+      "base_url": "https://www.google.com/{{ var }}",
+      "keyword": "search",
+      "type": "params"
+    }
+  },
+  "nus": {
+    "_leaf": null,
+    "temp": {
+      "_leaf": {
+        "base_url": "https://myaces.nus.edu.sg/htd/htd",
+        "docstring": "navigates to temperature declaration portal",
+        "type": "redirect"
+      }
+    }
+  }
+}

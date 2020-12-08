@@ -1,21 +1,17 @@
 import parse from 'url-parse';
-import { MainHandler } from './baseHandler.js';
+import handler from './baseHandler.js';
 
 /**
  * Respond with hello worker text
  * @param {Request} request
  */
 async function handleRequest(request) {
-  const requestUrl = new URL(request.url);
-
-  if (requestUrl.pathname === '/favicon.ico') {
-    return;
-  }
+  // const requestUrl = new URL(request.url);
 
   const query = extractQuery(request.url);
   const tokens = tokenize(query);
 
-  return await handle(tokens);
+  return await handler.handle(tokens);
 }
 
 /**
@@ -38,13 +34,6 @@ function extractQuery(urlString) {
 function tokenize(query) {
   // split on whitespaces and remove falsy values (empty string)
   return query.split(/\s+/).filter(c => c);
-}
-
-async function handle(tokens) {
-  let handler = new MainHandler();
-  handler.doc = 'adsf';
-
-  return await handler.handle(tokens);
 }
 
 addEventListener('fetch', event => {
