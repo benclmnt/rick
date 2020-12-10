@@ -5,9 +5,12 @@
   "description": "Browser redirector",
   "main": "index.js",
   "scripts": {
+    "conf-gen": "node generateConfig.js",
+    "fmt": "prettier --write '**/*.{js,css,json,md}'",
     "start": "RUST_BACKTRACE=1 wrangler dev",
-    "test": "echo \"Error: no test specified\" && exit 1",
-    "format": "prettier --write '**/*.{js,css,json,md}'"
+    "preview": "yarn conf-gen && wrangler preview --watch",
+    "publish": "yarn conf-gen && wrangler publish",
+    "test": "echo \"Error: no test specified\" && exit 1"
   },
   "author": "Bennett Clement <ben@benclmnt.com>",
   "license": "MIT",

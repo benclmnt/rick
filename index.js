@@ -1,12 +1,16 @@
 import parse from 'url-parse';
 import handler from './baseHandler.js';
+import config from './config.json';
 
 /**
  * Respond with hello worker text
  * @param {Request} request
  */
 async function handleRequest(request) {
-  // const requestUrl = new URL(request.url);
+  const requestUrl = new URL(request.url);
+  if (requestUrl.pathname == '/favicon.ico') {
+    return new Response('ok');
+  }
 
   const query = extractQuery(request.url);
   const tokens = tokenize(query);
@@ -33,7 +37,23 @@ function extractQuery(urlString) {
 
 function tokenize(query) {
   // split on whitespaces and remove falsy values (empty string)
-  return query.split(/\s+/).filter(c => c);
+  let tokens = query.split(/\s+/).filter(c => c);
+
+  if (tokens.length <= 1) {
+    return tokens;
+  }
+
+  // attempt to merge keyword
+  while (tokens.length > 1) {
+    const mergedKeyword = `${tokens[0]} ${tokens[1]}`.trim();
+    if (!(mergedKeyword in config)) {
+      return tokens;
+    }
+    tokens.shift();
+    tokens[0] = mergedKeyword;
+  }
+
+  return tokens;
 }
 
 addEventListener('fetch', event => {

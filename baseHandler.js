@@ -1,4 +1,6 @@
-const DEFAULT = '_default';
+import config from './config.json';
+
+const DEFAULT = '$default$';
 
 /**
  * Base class Handler
@@ -32,32 +34,37 @@ export class BaseHandler {
 export class MainHandler extends BaseHandler {
   constructor(doc) {
     super(doc);
-    this.handlers = {};
   }
 
-  /**
-   *
-   * @param {String} keyword
-   * @param {BaseHandler} handler
-   */
-  addHandler(keyword, handler) {
-    this.handlers[keyword] = handler;
+  getHandler(key) {
+    let handler;
+    let { type, base_url } = config[key];
+    switch (type) {
+      case 'querystring':
+        handler = new QueryBasedHandler(base_url, config[key]['q_param']);
+        break;
+      case 'redirect':
+        handler = new RedirectHandler(base_url);
+        break;
+      default:
+        // we are making redirect as the default.
+        handler = new RedirectHandler(base_url);
+        break;
+    }
+    return handler;
   }
 
   async handle(tokens) {
-    // console.log(tokens);
-
     if (tokens.length > 0) {
       const [command, ...otherTokens] = tokens;
-      const commandLowerCase = command.trim().toLowerCase();
+      let key = command.trim().toLowerCase();
 
-      if (commandLowerCase in this.handlers) {
-        return await this.handlers[commandLowerCase].handle(otherTokens);
+      if (key in config) {
+        return await this.getHandler(key).handle(otherTokens);
       }
 
-      // pass to default handler if no matching command.
-      if (DEFAULT in this.handlers) {
-        return await this.handlers[DEFAULT].handle(tokens);
+      if (DEFAULT in config) {
+        return await this.getHandler(DEFAULT).handle(tokens);
       }
     }
 
@@ -66,7 +73,7 @@ export class MainHandler extends BaseHandler {
     return new Response(
       `
       <head> <link rel="icon" type="image/png" href="data:image/png;base64,iVBORw0KGgo="> </head>
-      <body> Command not supported yet. </body>
+      <body> Nothing interesting here. </body>
       `,
       {
         headers: { 'content-type': 'text/html;charset=UTF-8' },
@@ -75,14 +82,8 @@ export class MainHandler extends BaseHandler {
   }
 }
 
-export class GoogleHandler extends BaseHandler {
-  async handle(tokens) {
-    return redirect('https://www.google.com/search?q=' + tokens.join(' '));
-  }
-}
-
 export class RedirectHandler extends BaseHandler {
-  constructor(docstring, redirectUrl) {
+  constructor(redirectUrl, docstring) {
     super(docstring);
     this.redirectUrl = redirectUrl;
   }
@@ -96,12 +97,20 @@ function redirect(toUrl) {
   return Response.redirect(toUrl);
 }
 
-// import config from './config.json'
-// console.log("config", config);
+export class QueryBasedHandler extends BaseHandler {
+  constructor(baseUrl, q_param, docstring) {
+    super(docstring);
+    this.baseUrl = baseUrl;
+    this.q_param = q_param;
+  }
+
+  async handle(tokens) {
+    let url = new URL(this.baseUrl);
+    url.searchParams.append(this.q_param, tokens.join(' '));
+    return redirect(url.href);
+  }
+}
 
 const app = new MainHandler();
-const goog = new GoogleHandler();
-app.addHandler('g', goog);
-app.addHandler(DEFAULT, goog);
 
 export default app;

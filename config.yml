@@ -1,14 +1,52 @@
 # config files
 ---
+$default$:
+  _leaf:
+    base_url: "https://www.google.com/search"
+    q_param: "q"
 g:
   _leaf:
-    base_url: "https://www.google.com/{{ var }}"
-    keyword: "search"
-    type: "params"
+    base_url: "https://www.google.com/search"
+    q_param: "q"
 nus:
-  _leaf: null
-  temp:
+  _default: "https://www.nus.edu.sg/"
+  lum:
+    _default: "https://luminus.nus.edu.sg/dashboard/"
     _leaf:
-      base_url: "https://myaces.nus.edu.sg/htd/htd"
-      docstring: "navigates to temperature declaration portal"
-      type: "redirect"
+      base_url: "https://luminus.nus.edu.sg/modules/{{ modules }}"
+      docstring: "navigates to modules in luminus"
+      type: "path"
+      modules:
+        cs2100: "edde22e8-413b-45a4-b2c5-9a948c23689d"
+        cs2101: "895148ac-63ef-4044-acf4-1ec29068d9e0"
+bib:
+  _leaf:
+    base_url: "https://www.biblegateway.com/passage/"
+    q_param: "search"
+cf:
+  _leaf:
+    base_url: "https://dash.cloudflare.com/"
+doc:
+  py:
+    _leaf:
+      base_url: "https://docs.python.org/3/search.html"
+      q_param: "q"
+  mdn:
+    _leaf:
+      base_url: "https://developer.mozilla.org/en-US/search"
+      q_param: "q"
+ibank:
+  ocbc:
+    _leaf:
+      base_url: "https://internet.ocbc.com/internet-banking"
+  dbs:
+    _leaf:
+      base_url: "https://internet-banking.dbs.com.sg"
+so:
+  _leaf:
+    base_url: "https://stackoverflow.com/search"
+    q_param: "q"
+yt:
+  _leaf:
+    base_url: "https://www.youtube.com/results"
+    q_param: "search_query"
