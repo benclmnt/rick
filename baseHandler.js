@@ -41,7 +41,7 @@ export class MainHandler extends BaseHandler {
     let { type, base_url } = config[key];
     switch (type) {
       case 'querystring':
-        handler = new QueryBasedHandler(base_url, config[key]['q_param']);
+        handler = new QueryBasedHandler(base_url, config[key]['q_params']);
         break;
       case 'redirect':
         handler = new RedirectHandler(base_url);
@@ -98,15 +98,28 @@ function redirect(toUrl) {
 }
 
 export class QueryBasedHandler extends BaseHandler {
-  constructor(baseUrl, q_param, docstring) {
+  constructor(baseUrl, q_params, docstring) {
     super(docstring);
     this.baseUrl = baseUrl;
-    this.q_param = q_param;
+    this.q_params = q_params;
   }
 
-  async handle(tokens) {
+  async handle(tokens = []) {
     let url = new URL(this.baseUrl);
-    url.searchParams.append(this.q_param, tokens.join(' '));
+
+    // attempting to merge into the last index
+    if (tokens.length > this.q_params.length) {
+      tokens[this.q_params.length - 1] = tokens
+        .slice(this.q_params.length - 1)
+        .join(' ');
+    }
+
+    this.q_params.map((param, idx) =>
+      url.searchParams.append(
+        param,
+        tokens[idx] !== undefined ? tokens[idx] : '',
+      ),
+    );
     return redirect(url.href);
   }
 }

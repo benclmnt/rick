@@ -15,7 +15,7 @@ function flatten(obj, command, newObj) {
 
     if (!newObj[command].type) {
       let autoinfer;
-      if ('q_param' in newObj[command]) {
+      if ('q_params' in newObj[command]) {
         autoinfer = 'querystring';
       } else {
         autoinfer = 'redirect';
@@ -28,6 +28,14 @@ function flatten(obj, command, newObj) {
       throw new Error(
         `Missing base url in ${command}. Check your config.yml again`,
       );
+    }
+
+    // transform q_params to an array with 1 element if it is a string
+    if (
+      'q_params' in newObj[command] &&
+      typeof newObj[command]['q_params'] === 'string'
+    ) {
+      newObj[command]['q_params'] = [newObj[command]['q_params']];
     }
 
     return;

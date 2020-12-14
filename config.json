@@ -1,1 +1,77 @@
-{"$default$":{"base_url":"https://www.google.com/search","q_param":"q","type":"querystring"},"g":{"base_url":"https://www.google.com/search","q_param":"q","type":"querystring"},"nus":{"base_url":"https://www.nus.edu.sg/","type":"redirect"},"nus lum":{"base_url":"https://luminus.nus.edu.sg/modules/{{ modules }}","docstring":"navigates to modules in luminus","type":"path","modules":{"cs2100":"edde22e8-413b-45a4-b2c5-9a948c23689d","cs2101":"895148ac-63ef-4044-acf4-1ec29068d9e0"}},"bib":{"base_url":"https://www.biblegateway.com/passage/","q_param":"search","type":"querystring"},"cf":{"base_url":"https://dash.cloudflare.com/","type":"redirect"},"doc py":{"base_url":"https://docs.python.org/3/search.html","q_param":"q","type":"querystring"},"doc mdn":{"base_url":"https://developer.mozilla.org/en-US/search","q_param":"q","type":"querystring"},"ibank ocbc":{"base_url":"https://internet.ocbc.com/internet-banking","type":"redirect"},"ibank dbs":{"base_url":"https://internet-banking.dbs.com.sg","type":"redirect"},"so":{"base_url":"https://stackoverflow.com/search","q_param":"q","type":"querystring"},"yt":{"base_url":"https://www.youtube.com/results","q_param":"search_query","type":"querystring"}}
+{
+  "$default$": {
+    "base_url": "https://www.google.com/search",
+    "q_params": ["q"],
+    "type": "querystring"
+  },
+  "g": {
+    "base_url": "https://www.google.com/search",
+    "q_params": ["q"],
+    "type": "querystring"
+  },
+  "nus": { "base_url": "https://www.nus.edu.sg/", "type": "redirect" },
+  "nus lum": {
+    "base_url": "https://luminus.nus.edu.sg/modules/{{ modules }}",
+    "docstring": "navigates to modules in luminus",
+    "type": "path",
+    "modules": {
+      "cs2100": "edde22e8-413b-45a4-b2c5-9a948c23689d",
+      "cs2101": "895148ac-63ef-4044-acf4-1ec29068d9e0"
+    }
+  },
+  "bib": {
+    "base_url": "https://alkitab.sabda.org/bible.php",
+    "q_params": ["book", "chapter"],
+    "type": "querystring"
+  },
+  "cf": { "base_url": "https://dash.cloudflare.com/", "type": "redirect" },
+  "doc py": {
+    "base_url": "https://docs.python.org/3/search.html",
+    "q_params": ["q"],
+    "type": "querystring"
+  },
+  "doc mdn": {
+    "base_url": "https://developer.mozilla.org/en-US/search",
+    "q_params": ["q"],
+    "type": "querystring"
+  },
+  "ibank ocbc": {
+    "base_url": "https://internet.ocbc.com/internet-banking",
+    "type": "redirect"
+  },
+  "ibank dbs": {
+    "base_url": "https://internet-banking.dbs.com.sg",
+    "type": "redirect"
+  },
+  "libgen": {
+    "base_url": "http://libgen.rs/search.php",
+    "q_params": ["req"],
+    "type": "querystring"
+  },
+  "so": {
+    "base_url": "https://stackoverflow.com/search",
+    "q_params": ["q"],
+    "type": "querystring"
+  },
+  "soc claim": {
+    "base_url": "https://mysoc.nus.edu.sg/~tssclaim/tutor/index.php",
+    "type": "redirect"
+  },
+  "soc curr": {
+    "base_url": "https://www.comp.nus.edu.sg/cugresource/per-cohort/cs/cs-19-20/",
+    "type": "redirect"
+  },
+  "soc print": {
+    "base_url": "https://mysoc.nus.edu.sg/app/eprint/forms/quota.php",
+    "type": "redirect"
+  },
+  "soc sched": {
+    "base_url": "https://www.comp.nus.edu.sg/cugresource/soc-sched/",
+    "type": "redirect"
+  },
+  "yt": {
+    "base_url": "https://www.youtube.com/results",
+    "q_params": ["search_query"],
+    "type": "querystring"
+  }
+}

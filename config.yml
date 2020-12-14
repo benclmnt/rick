@@ -3,11 +3,11 @@
 $default$:
   _leaf:
     base_url: "https://www.google.com/search"
-    q_param: "q"
+    q_params: "q"
 g:
   _leaf:
     base_url: "https://www.google.com/search"
-    q_param: "q"
+    q_params: "q"
 nus:
   _default: "https://www.nus.edu.sg/"
   lum:
@@ -21,8 +21,10 @@ nus:
         cs2101: "895148ac-63ef-4044-acf4-1ec29068d9e0"
 bib:
   _leaf:
-    base_url: "https://www.biblegateway.com/passage/"
-    q_param: "search"
+    base_url: "https://alkitab.sabda.org/bible.php"
+    q_params:
+      - "book"
+      - "chapter"
 cf:
   _leaf:
     base_url: "https://dash.cloudflare.com/"
@@ -30,11 +32,11 @@ doc:
   py:
     _leaf:
       base_url: "https://docs.python.org/3/search.html"
-      q_param: "q"
+      q_params: "q"
   mdn:
     _leaf:
       base_url: "https://developer.mozilla.org/en-US/search"
-      q_param: "q"
+      q_params: "q"
 ibank:
   ocbc:
     _leaf:
@@ -42,11 +44,28 @@ ibank:
   dbs:
     _leaf:
       base_url: "https://internet-banking.dbs.com.sg"
+libgen:
+  _leaf:
+    base_url: "http://libgen.rs/search.php"
+    q_params: "req"
 so:
   _leaf:
     base_url: "https://stackoverflow.com/search"
-    q_param: "q"
+    q_params: "q"
+soc:
+  claim:
+    _leaf:
+      base_url: "https://mysoc.nus.edu.sg/~tssclaim/tutor/index.php"
+  curr:
+    _leaf:
+      base_url: "https://www.comp.nus.edu.sg/cugresource/per-cohort/cs/cs-19-20/"
+  print:
+    _leaf:
+      base_url: "https://mysoc.nus.edu.sg/app/eprint/forms/quota.php"
+  sched:
+    _leaf:
+      base_url: "https://www.comp.nus.edu.sg/cugresource/soc-sched/"
 yt:
   _leaf:
     base_url: "https://www.youtube.com/results"
-    q_param: "search_query"
+    q_params: "search_query"
