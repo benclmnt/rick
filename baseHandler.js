@@ -38,17 +38,19 @@ export class MainHandler extends BaseHandler {
 
   getHandler(key) {
     let handler;
-    let { type, base_url } = config[key];
-    switch (type) {
+    switch (config[key].type) {
       case 'querystring':
-        handler = new QueryBasedHandler(base_url, config[key]['q_params']);
+        handler = new QueryBasedHandler(config[key]);
+        break;
+      case 'path':
+        handler = new PathBasedHandler(config[key]);
         break;
       case 'redirect':
-        handler = new RedirectHandler(base_url);
+        handler = new RedirectHandler(config[key]);
         break;
       default:
         // we are making redirect as the default.
-        handler = new RedirectHandler(base_url);
+        handler = new RedirectHandler(config[key]);
         break;
     }
     return handler;
@@ -83,9 +85,9 @@ export class MainHandler extends BaseHandler {
 }
 
 export class RedirectHandler extends BaseHandler {
-  constructor(redirectUrl, docstring) {
-    super(docstring);
-    this.redirectUrl = redirectUrl;
+  constructor(config) {
+    super(config.docstring);
+    this.redirectUrl = config.base_url;
   }
 
   async handle() {
@@ -98,14 +100,14 @@ function redirect(toUrl) {
 }
 
 export class QueryBasedHandler extends BaseHandler {
-  constructor(baseUrl, q_params, docstring) {
-    super(docstring);
-    this.baseUrl = baseUrl;
-    this.q_params = q_params;
+  constructor(config) {
+    super(config.docstring);
+    this.base_url = config.base_url;
+    this.q_params = config.q_params || [];
   }
 
   async handle(tokens = []) {
-    let url = new URL(this.baseUrl);
+    let url = new URL(this.base_url);
 
     // attempting to merge into the last index
     if (tokens.length > this.q_params.length) {
@@ -121,6 +123,42 @@ export class QueryBasedHandler extends BaseHandler {
       ),
     );
     return redirect(url.href);
+  }
+}
+
+export class PathBasedHandler extends BaseHandler {
+  constructor(config) {
+    super(config.docstring);
+    this.base_url = config.base_url;
+    this.options = config.options || {};
+    this.keywords = config.keywords || [];
+  }
+
+  async handle(tokens = []) {
+    let urlstring = this.base_url;
+
+    for (let i = 0; i < this.keywords.length; i++) {
+      let key = this.keywords[i];
+      let token = tokens[i];
+
+      // token is undefined here meaning not enough tokens to fill in all keywords
+      // so, we just take what has been substituted so far.
+      if (!token) {
+        urlstring = urlstring.slice(0, urlstring.search(/{{/));
+        break;
+      }
+
+      let regexp = new RegExp(`{{\\s*${key}\\s*}}`, 'gi');
+      console.log(regexp);
+      urlstring = urlstring.replace(
+        regexp,
+        this.options[key] !== undefined && token in this.options[key]
+          ? this.options[key][token]
+          : token,
+      );
+    }
+
+    return redirect(new URL(urlstring).href);
   }
 }
 

@@ -9,16 +9,6 @@
     "q_params": ["q"],
     "type": "querystring"
   },
-  "nus": { "base_url": "https://www.nus.edu.sg/", "type": "redirect" },
-  "nus lum": {
-    "base_url": "https://luminus.nus.edu.sg/modules/{{ modules }}",
-    "docstring": "navigates to modules in luminus",
-    "type": "path",
-    "modules": {
-      "cs2100": "edde22e8-413b-45a4-b2c5-9a948c23689d",
-      "cs2101": "895148ac-63ef-4044-acf4-1ec29068d9e0"
-    }
-  },
   "bib": {
     "base_url": "https://alkitab.sabda.org/bible.php",
     "q_params": ["book", "chapter"],
@@ -35,6 +25,13 @@
     "q_params": ["q"],
     "type": "querystring"
   },
+  "gh": {
+    "base_url": "https://github.com/{{ acc }}/{{ repo }}",
+    "type": "path",
+    "keywords": ["acc", "repo"],
+    "options": {}
+  },
+  "gh home": { "base_url": "https://github.com/benclmnt", "type": "redirect" },
   "ibank ocbc": {
     "base_url": "https://internet.ocbc.com/internet-banking",
     "type": "redirect"
@@ -47,6 +44,32 @@
     "base_url": "http://libgen.rs/search.php",
     "q_params": ["req"],
     "type": "querystring"
+  },
+  "nus lum": {
+    "base_url": "https://luminus.nus.edu.sg/modules/{{ :modules }}/{{ :tab }}",
+    "docstring": "navigates to modules in luminus",
+    "type": "path",
+    "keywords": [":modules", ":tab"],
+    "options": {
+      ":modules": {
+        "2100": "edde22e8-413b-45a4-b2c5-9a948c23689d",
+        "2101": "895148ac-63ef-4044-acf4-1ec29068d9e0"
+      },
+      ":tab": {
+        "a": "announcements",
+        "f": "files",
+        "g": "gradebook",
+        "l": "conferencing",
+        "m": "multimedia",
+        "q": "quiz"
+      }
+    }
+  },
+  "nus cm": {
+    "base_url": "https://coursemology.org/courses/{{ :course_no }}",
+    "type": "path",
+    "keywords": [":course_no"],
+    "options": { ":course_no": { "2102": "1904" } }
   },
   "so": {
     "base_url": "https://stackoverflow.com/search",

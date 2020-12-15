@@ -8,17 +8,6 @@ g:
   _leaf:
     base_url: "https://www.google.com/search"
     q_params: "q"
-nus:
-  _default: "https://www.nus.edu.sg/"
-  lum:
-    _default: "https://luminus.nus.edu.sg/dashboard/"
-    _leaf:
-      base_url: "https://luminus.nus.edu.sg/modules/{{ modules }}"
-      docstring: "navigates to modules in luminus"
-      type: "path"
-      modules:
-        cs2100: "edde22e8-413b-45a4-b2c5-9a948c23689d"
-        cs2101: "895148ac-63ef-4044-acf4-1ec29068d9e0"
 bib:
   _leaf:
     base_url: "https://alkitab.sabda.org/bible.php"
@@ -37,6 +26,13 @@ doc:
     _leaf:
       base_url: "https://developer.mozilla.org/en-US/search"
       q_params: "q"
+gh:
+  _leaf:
+    base_url: "https://github.com/{{ acc }}/{{ repo }}"
+    type: "path"
+  home:
+    _leaf:
+      base_url: "https://github.com/benclmnt"
 ibank:
   ocbc:
     _leaf:
@@ -48,6 +44,28 @@ libgen:
   _leaf:
     base_url: "http://libgen.rs/search.php"
     q_params: "req"
+nus:
+  lum:
+    _leaf:
+      base_url: "https://luminus.nus.edu.sg/modules/{{ :modules }}/{{ :tab }}"
+      docstring: "navigates to modules in luminus"
+      type: "path"
+      :modules:
+        2100: "edde22e8-413b-45a4-b2c5-9a948c23689d"
+        2101: "895148ac-63ef-4044-acf4-1ec29068d9e0"
+      :tab:
+        a: "announcements"
+        f: "files"
+        g: "gradebook"
+        l: "conferencing"
+        m: "multimedia"
+        q: "quiz"
+  cm:
+    _leaf:
+      base_url: "https://coursemology.org/courses/{{ :course_no }}"
+      type: "path"
+      :course_no:
+        2102: "1904"
 so:
   _leaf:
     base_url: "https://stackoverflow.com/search"
