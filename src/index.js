@@ -1,5 +1,5 @@
 import parse from 'url-parse';
-import handler from './baseHandler.js';
+import handler from './handlers.js';
 import config from './config.json';
 
 /**
@@ -10,6 +10,14 @@ async function handleRequest(request) {
   const requestUrl = new URL(request.url);
   if (requestUrl.pathname == '/favicon.ico') {
     return new Response('ok');
+  }
+
+  // returns list page
+  if (['/', '/cmdlist'].includes(requestUrl.pathname)) {
+    const { default: html } = await import('./cmdlist.html');
+    return new Response(html, {
+      headers: { 'content-type': 'text/html;charset=UTF-8' },
+    });
   }
 
   const query = extractQuery(request.url);

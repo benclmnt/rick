@@ -1,6 +1,6 @@
 import config from './config.json';
 
-const DEFAULT = '$default$';
+const DEFAULT_CONFIG_KEY = '$default$';
 
 /**
  * Base class Handler
@@ -65,8 +65,8 @@ export class MainHandler extends BaseHandler {
         return await this.getHandler(key).handle(otherTokens);
       }
 
-      if (DEFAULT in config) {
-        return await this.getHandler(DEFAULT).handle(tokens);
+      if (DEFAULT_CONFIG_KEY in config) {
+        return await this.getHandler(DEFAULT_CONFIG_KEY).handle(tokens);
       }
     }
 

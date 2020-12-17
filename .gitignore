@@ -9,5 +9,8 @@ worker/
 node_modules/
 .cargo-ok
 
+yarn-*.log
+
 # Compiled version of config.yml
 src/config.json
+src/cmdlist.html

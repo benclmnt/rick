@@ -1,13 +1,33 @@
 /* eslint-disable */
+
+/**
+ * This file is the "build script" for the project.
+ * 1. Read the yaml configuration as a JSON file and sort based on the key. This is to have an ordered command list page
+ * 2. Flatten the JSON file to depth 1, each command maps to the configuration
+ * 3. Write the json file to src/ folder so that webpack can take care of it.
+ * 4. Use the flattened file to pass the docstrings into cmdlist.ejs
+ */
 const yaml = require('yaml');
 const path = require('path');
 const fs = require('fs');
+const ejs = require('ejs');
+const project = require('../package.json');
+
+const DEFAULT_CONFIG_KEY = '$default$';
+const inYmlFilePath = './config.yml';
+const outJsonFilePath = '../src/config.json';
+const outHtmlFilePath = '../src/cmdlist.html';
 
 const configFile = fs.readFileSync(
-  path.join(__dirname, '../config.yml'),
+  path.join(__dirname, inYmlFilePath),
   'utf-8',
 );
-const config = yaml.parse(configFile);
+let config = yaml.parse(configFile);
+
+// modified from https://stackoverflow.com/questions/5467129/sort-javascript-object-by-key
+config = Object.keys(config)
+  .sort()
+  .reduce((obj, key) => ({ ...obj, [key]: config[key] }), {});
 
 function flatten(obj, command, newObj) {
   for (let [key, value] of Object.entries(obj)) {
@@ -42,9 +62,8 @@ function flatten(obj, command, newObj) {
 }
 
 /**
- * Functions to augment default object
+ * Functions to augment query config obj
  */
-
 function _treatQueryBased(obj = {}) {
   if (obj.type !== 'querystring') {
     return;
@@ -55,6 +74,9 @@ function _treatQueryBased(obj = {}) {
   }
 }
 
+/**
+ * Functions to augment path config obj
+ */
 function _treatPathBased(obj = {}) {
   if (obj.type !== 'path') {
     return;
@@ -83,11 +105,35 @@ function _treatPathBased(obj = {}) {
   obj.options = options;
 }
 
-// flatten the tree
+// flatten the tree and write to json file
 const flattenedConfig = {};
 flatten(config, '', flattenedConfig);
 
 fs.writeFileSync(
-  path.join(__dirname, './config.json'),
+  path.join(__dirname, outJsonFilePath),
   JSON.stringify(flattenedConfig),
+);
+
+// take compiled tailwind css and plop it into the html file we generate from ejs
+let env = process.env.NODE_ENV || 'development';
+
+ejs.renderFile(
+  'src/cmdlist.ejs',
+  {
+    config: flattenedConfig,
+    css: fs.readFileSync(path.join(__dirname, `../dist/tailwind.${env}.css`), {
+      encoding: 'utf-8',
+    }),
+    DEFAULT_CONFIG_KEY,
+    project,
+  },
+  { root: './src' },
+  function(err, html) {
+    if (err) {
+      console.error(err);
+      return;
+    }
+
+    fs.writeFileSync(path.join(__dirname, outHtmlFilePath), html);
+  },
 );
