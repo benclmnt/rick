@@ -10,9 +10,8 @@
     "fmt": "prettier --write '**/*.{js,css,json,md}'",
     "start": "yarn prep && RUST_BACKTRACE=1 wrangler dev",
     "prep": "node scripts/prepare.js",
-    "prep:prod": "yarn css:prod && NODE_ENV=production yarn prep",
-    "preview": "wrangler preview --watch",
-    "publish": "yarn prep:prod && wrangler publish",
+    "preview": "NODE_ENV=production yarn prep && wrangler preview --watch",
+    "publish": "NODE_ENV=production yarn prep && wrangler publish",
     "test": "echo \"Error: no test specified\" && exit 1"
   },
   "author": "Bennett Clement <ben@benclmnt.com>",

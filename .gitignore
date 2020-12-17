@@ -11,6 +11,8 @@ node_modules/
 
 yarn-*.log
 
-# Compiled version of config.yml
+# Compiled version of yml and ejs files
 src/config.json
 src/cmdlist.html
+
+wrangler.toml
