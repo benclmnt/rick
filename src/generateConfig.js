@@ -4,7 +4,7 @@ const path = require('path');
 const fs = require('fs');
 
 const configFile = fs.readFileSync(
-  path.join(__dirname, './config.yml'),
+  path.join(__dirname, '../config.yml'),
   'utf-8',
 );
 const config = yaml.parse(configFile);

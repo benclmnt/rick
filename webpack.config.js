@@ -1,5 +1,5 @@
 /* eslint-disable */
 module.exports = {
   target: 'webworker',
-  entry: './index.js',
+  entry: './src',
 };

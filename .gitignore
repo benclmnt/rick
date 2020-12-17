@@ -8,3 +8,6 @@ wasm-pack.log
 worker/
 node_modules/
 .cargo-ok
+
+# Compiled version of config.yml
+src/config.json
