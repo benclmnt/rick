@@ -8,10 +8,6 @@ import config from './config.json';
  */
 async function handleRequest(request) {
   const requestUrl = new URL(request.url);
-  if (requestUrl.pathname == '/favicon.ico') {
-    return new Response('ok');
-  }
-
   // returns list page
   if (['/', '/cmdlist'].includes(requestUrl.pathname)) {
     const { default: html } = await import('./cmdlist.html');

@@ -70,8 +70,9 @@ export class MainHandler extends BaseHandler {
       }
     }
 
-    // Prevent favicon requests
-    // https://stackoverflow.com/questions/1321878
+    // Prevent favicon requests from https://stackoverflow.com/questions/1321878
+    // This part should not be reached  if `/` is set to display the list page
+    // and DEFAULT_CONFIG_KEY exists in the config file
     return new Response(
       `
       <head> <link rel="icon" type="image/png" href="data:image/png;base64,iVBORw0KGgo="> </head>

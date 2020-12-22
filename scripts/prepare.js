@@ -42,7 +42,7 @@ function flatten(obj, command, newObj) {
           autoinfer = 'redirect';
         }
         console.info(
-          `[Info] Missing type in ${command}, bunny infers '${autoinfer}'.`,
+          `[Info] Missing type in ${command}, rick infers '${autoinfer}'.`,
         );
         newObj[command].type = autoinfer;
       }
