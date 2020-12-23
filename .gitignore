@@ -11,6 +11,9 @@ node_modules/
 
 yarn-*.log
 
+# secrets
+rick.config.yml
+
 # Compiled version of yml and ejs files
 src/config.json
 src/cmdlist.html

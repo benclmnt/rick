@@ -14,7 +14,7 @@ const ejs = require('ejs');
 const project = require('../package.json');
 
 const DEFAULT_CONFIG_KEY = '$default$';
-const inYmlFilePath = './config.yml';
+const inYmlFilePath = '../rick.config.yml';
 const outJsonFilePath = '../src/config.json';
 const outHtmlFilePath = '../src/cmdlist.html';
 
@@ -22,12 +22,7 @@ const configFile = fs.readFileSync(
   path.join(__dirname, inYmlFilePath),
   'utf-8',
 );
-let config = yaml.parse(configFile);
-
-// modified from https://stackoverflow.com/questions/5467129/sort-javascript-object-by-key
-config = Object.keys(config)
-  .sort()
-  .reduce((obj, key) => ({ ...obj, [key]: config[key] }), {});
+const config = yaml.parse(configFile);
 
 function flatten(obj, command, newObj) {
   for (let [key, value] of Object.entries(obj)) {
@@ -106,8 +101,13 @@ function _treatPathBased(obj = {}) {
 }
 
 // flatten the tree and write to json file
-const flattenedConfig = {};
+let flattenedConfig = {};
 flatten(config, '', flattenedConfig);
+
+// modified from https://stackoverflow.com/questions/5467129/sort-javascript-object-by-key
+flattenedConfig = Object.keys(flattenedConfig)
+  .sort()
+  .reduce((obj, key) => ({ ...obj, [key]: flattenedConfig[key] }), {});
 
 fs.writeFileSync(
   path.join(__dirname, outJsonFilePath),
