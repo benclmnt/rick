@@ -16,6 +16,6 @@ rick.config.yml
 
 # Compiled version of yml and ejs files
 src/config.json
-src/cmdlist.html
+src/resources/cmdlist.html
 
 wrangler.toml

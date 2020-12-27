@@ -9,6 +9,10 @@ module.exports = {
         loader: 'html-loader',
       },
       {
+        test: /\.(txt|xml)$/i,
+        use: 'raw-loader',
+      },
+      {
         enforce: 'pre',
         test: /\.js$/i,
         loader: 'source-map-loader',

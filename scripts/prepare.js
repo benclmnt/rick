@@ -16,7 +16,7 @@ const project = require('../package.json');
 const DEFAULT_CONFIG_KEY = '$default$';
 const inYmlFilePath = '../rick.config.yml';
 const outJsonFilePath = '../src/config.json';
-const outHtmlFilePath = '../src/cmdlist.html';
+const outHtmlFilePath = '../src/resources/cmdlist.html';
 
 const configFile = fs.readFileSync(
   path.join(__dirname, inYmlFilePath),
@@ -118,7 +118,7 @@ fs.writeFileSync(
 let env = process.env.NODE_ENV || 'development';
 
 ejs.renderFile(
-  'src/cmdlist.ejs',
+  'src/resources/cmdlist.ejs',
   {
     config: flattenedConfig,
     css: fs.readFileSync(path.join(__dirname, `../dist/tailwind.${env}.css`), {

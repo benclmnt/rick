@@ -10,9 +10,18 @@ async function handleRequest(request) {
   const requestUrl = new URL(request.url);
   // returns list page
   if (['/', '/cmdlist'].includes(requestUrl.pathname)) {
-    const { default: html } = await import('./cmdlist.html');
+    const { default: html } = await import('./resources/cmdlist.html');
     return new Response(html, {
       headers: { 'content-type': 'text/html;charset=UTF-8' },
+    });
+  }
+
+  if (requestUrl.pathname === '/_opensearch') {
+    const { default: openSearchDescription } = await import(
+      './resources/_opensearch.xml'
+    );
+    return new Response(openSearchDescription, {
+      headers: { 'content-type': 'application/xml' },
     });
   }
 
