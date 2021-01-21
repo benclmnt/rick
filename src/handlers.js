@@ -110,11 +110,30 @@ export class QueryBasedHandler extends BaseHandler {
   async handle(tokens = []) {
     let url = new URL(this.base_url);
 
-    // attempting to merge into the last index
+    // attempting to merge any extra tokens with the last token
     if (tokens.length > this.q_params.length) {
       tokens[this.q_params.length - 1] = tokens
         .slice(this.q_params.length - 1)
         .join(' ');
+    }
+
+    // try to extract the query part from a url.
+    //
+    // Note: Only the last token is processed, and only the first search params is matched.
+    //
+    // Rationale: I don't want to iterate through all the possible URLSearchParams keys
+    // since it might differ from site to site. Example: youtube uses "search_query", google uses "q" as key.
+    //
+    // Usage: "g https://www.youtube.com/results?search_query=rick" will search google for "rick".
+    try {
+      tokens[this.q_params.length - 1] = new URL(
+        tokens[this.q_params.length - 1],
+      ).searchParams
+        .values()
+        .next().value;
+    } catch (err) {
+      // err might be caused because there is not enough token, or the token does not form a url
+      // for both cases, we ignore the result from querystringFromUrl
     }
 
     this.q_params.map((param, idx) =>
@@ -150,7 +169,6 @@ export class PathBasedHandler extends BaseHandler {
       }
 
       let regexp = new RegExp(`{{\\s*${key}\\s*}}`, 'gi');
-      console.log(regexp);
       urlstring = urlstring.replace(
         regexp,
         this.options[key] !== undefined && token in this.options[key]
