@@ -5,8 +5,8 @@
   "description": "Your personalized search engine",
   "main": "index.js",
   "scripts": {
-    "css:build": "npx tailwindcss-cli@latest build ./src/tailwind.css -c ./tailwind.config.js -o ./dist/tailwind.development.css",
-    "css:prod": "NODE_ENV=production npx tailwindcss-cli@latest build ./src/tailwind.css -c ./tailwind.config.js -o ./dist/tailwind.production.css",
+    "css:build": "npx tailwindcss-cli@latest build ./src/resources/tailwind.css -c ./tailwind.config.js -o ./dist/tailwind.development.css",
+    "css:prod": "NODE_ENV=production npx tailwindcss-cli@latest build ./src/resources/tailwind.css -c ./tailwind.config.js -o ./dist/tailwind.production.css",
     "fmt": "prettier --write '**/*.{js,css,json,md}'",
     "start": "yarn prep && RUST_BACKTRACE=1 wrangler dev",
     "prep": "node scripts/prepare.js",
