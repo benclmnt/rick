@@ -1,15 +1,13 @@
-# 👷 `worker-template` Hello World
+# Rick 🐰
 
-A template for kick starting a Cloudflare worker project.
+Rick is my personal internet navigator.
 
-[`index.js`](https://github.com/cloudflare/worker-template/blob/master/index.js) is the content of the Workers script.
+I use it as my default search engine, which is similar to a normal duckduckgo search but with some powerups, such as
+1. Directly do a website search, such as MDN doc search or youtube search
+2. Store personal shortcuts for frequently-accessed links
 
-#### Wrangler
+Some powerups are listed [here](https://rick.benclmnt.com/)
 
-To generate using [wrangler](https://github.com/cloudflare/wrangler)
+## Stack
 
-```
-wrangler generate projectname https://github.com/cloudflare/worker-template
-```
-
-Further documentation for Wrangler can be found [here](https://developers.cloudflare.com/workers/tooling/wrangler).
+The project is built using Cloudflare worker.
