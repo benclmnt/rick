@@ -1,6 +1,6 @@
 /* eslint-disable */
 module.exports = {
-  purge: ['./src/**/*.ejs'],
+  content: ['./src/**/*.ejs'],
   theme: {
     extend: {},
   },
