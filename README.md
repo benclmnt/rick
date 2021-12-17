@@ -2,10 +2,10 @@
 
 Rick is my personal internet navigator.
 
-I use it as my default search engine, which defaults to a normal duckduckgo search but contain some powerups, such as
+I use it as my default search engine, which defaults to a [normal duckduckgo search](https://rick.benclmnt.com/rickroll) but contain some powerups, such as
 
-1. Directly do a website search, such as MDN doc search or youtube search
-2. Store personal shortcuts for frequently-accessed links e.g. school's website, zoom links, etc.
+1. Directly do a website search, such as youtube search [yt rickroll](https://rick.benclmnt.com/yt%20rickroll)
+2. Store personal shortcuts for frequently-accessed links e.g. school's website, zoom links, etc. [gh home](https://rick.benclmnt.com/gh%20home)
 
 Powerups are configurable. Some of them are listed [here](https://rick.benclmnt.com/)
 
@@ -69,6 +69,13 @@ g:
 
 You can provide more than 1 q_params too, by specifying it as a YAML list.
 
+Another cool thing that you can do with rick is converting between multiple search engines, e.g. youtube search to wikipedia search to google search.
+
+Example:
+
+- [yt rickroll](https://rick.benclmnt.com/yt%20rickroll)
+- Convert youtube search into wikipedia search [wk https://www.youtube.com/results?search_query=rickroll](https://rick.benclmnt.com/wk%20https://www.youtube.com/results?search_query=rickroll)
+
 ### Path
 
 You can also create shortcuts for websites with guessable-path.
@@ -101,9 +108,9 @@ Similar to redirects, the `type` here is optional. If rick sees `{{` in the base
 
 To sum up,
 
-- `gh` maps to `https://github.com`
-- `gh home` and `gh benclmnt` maps to `https://github.com/benclmnt`
-- `gh home rick` maps to `https://github.com/benclmnt/rick`
+- [gh](https://rick.benclmnt.com/gh) maps to `https://github.com`
+- [gh home](https://rick.benclmnt.com/gh%20home) and [gh benclmnt](https://rick.benclmnt.com/gh%20benclmnt) maps to `https://github.com/benclmnt`
+- [gh home rick](https://rick.benclmnt.com/gh%20home%20rick) maps to `https://github.com/benclmnt/rick`
 
 ### Nesting
 
@@ -135,3 +142,8 @@ To specify defaults / fallback for commands, use the key `$default$`.
 ## Stack
 
 The project runs on the awesome [Cloudflare worker](https://developers.cloudflare.com/workers/).
+
+Inspiration:
+
+- https://github.com/taneliang/neh
+- Facebook's bunny tool

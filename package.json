@@ -7,10 +7,10 @@
   "scripts": {
     "css:prod": "pnpx tailwindcss --minify -i ./src/resources/tailwind.css -c ./tailwind.config.js -o ./dist/tailwind.production.css",
     "fmt": "prettier --write '**/*.{js,css,json,md}'",
-    "start": "pnpm prep && RUST_BACKTRACE=1 wrangler dev",
+    "start": "pnpm prep && RUST_BACKTRACE=1 pnpm wrangler dev",
     "prep": "node scripts/prepare.js",
-    "preview": "NODE_ENV=production pnpm prep && wrangler preview --watch",
-    "publish": "pnpm css:prod && NODE_ENV=production pnpm prep && wrangler publish",
+    "preview": "NODE_ENV=production pnpm prep && pnpm wrangler preview --watch",
+    "publish": "pnpm css:prod && NODE_ENV=production pnpm prep && pnpm wrangler publish",
     "test": "echo \"Error: no test specified\" && exit 1"
   },
   "author": "Bennett Clement <ben@benclmnt.com>",
