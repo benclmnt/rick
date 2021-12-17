@@ -5,13 +5,12 @@
   "description": "Your personalized search engine",
   "main": "index.js",
   "scripts": {
-    "css:dev": "pnpx tailwindcss -i ./src/resources/tailwind.css -c ./tailwind.config.js -o ./dist/tailwind.development.css",
     "css:prod": "pnpx tailwindcss --minify -i ./src/resources/tailwind.css -c ./tailwind.config.js -o ./dist/tailwind.production.css",
     "fmt": "prettier --write '**/*.{js,css,json,md}'",
     "start": "pnpm prep && RUST_BACKTRACE=1 wrangler dev",
     "prep": "node scripts/prepare.js",
     "preview": "NODE_ENV=production pnpm prep && wrangler preview --watch",
-    "publish": "NODE_ENV=production pnpm prep && wrangler publish",
+    "publish": "pnpm css:prod && NODE_ENV=production pnpm prep && wrangler publish",
     "test": "echo \"Error: no test specified\" && exit 1"
   },
   "author": "Bennett Clement <ben@benclmnt.com>",

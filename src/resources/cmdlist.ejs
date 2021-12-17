@@ -1,17 +1,30 @@
 <!DOCTYPE html>
 <html lang="en">
+
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <meta name="description" content="">
-    <link rel="icon" href="data:image/svg+xml,<svg xmlns=%22http://www.w3.org/2000/svg%22 viewBox=%220 0 100 100%22><text y=%22.9em%22 font-size=%2290%22>🐰</text></svg>">
+    <link rel="icon"
+        href="data:image/svg+xml,<svg xmlns=%22http://www.w3.org/2000/svg%22 viewBox=%220 0 100 100%22><text y=%22.9em%22 font-size=%2290%22>🐰</text></svg>">
     <link rel="search" type="application/opensearchdescription+xml" href="/_opensearch" title="Search Rick">
-    <style><%= css %></style>
-    <title><%= project.name.toUpperCase() %> Command List</title>
+    <% if (process.env.NODE_ENV !=='production' ) { %>
+    <script src="https://cdn.tailwindcss.com"></script>
+    <% } else { %>
+    <style>
+        <%=css %>
+    </style>
+    <% } %>
+    <title>
+        <%= title.toUpperCase() %> Command List
+    </title>
 </head>
+
 <body>
     <div class="py-10 max-w-2xl mx-auto">
-        <h1 class="px-3 font-black leading-none text-6xl mt-10 mb-8">🐰<%= project.name.toUpperCase() %>!</h1>
+        <h1 class="px-3 leading-none text-6xl mt-10 mb-8">🐰<span class="font-bold">
+                <%= title.toUpperCase() %>!
+            </span></h1>
         <table class="text-left w-full h-full sm_px-4">
             <thead class="uppercase text-xs text-gray-700 tracking-wide">
                 <tr>
@@ -20,20 +33,28 @@
                 </tr>
             </thead>
             <tbody>
-            <% Object.entries(config).filter(kv => kv[1].docstring).map(kv => { %>
-                <tr class="odd:bg-gray-100">
-                    <% if (kv[0] === DEFAULT_CONFIG_KEY) { %>
-                    <td class="p-3"><em>By default, <%= project.name %></em></td>
-                    <% } else { %>
-                    <td class="p-3 align-text-top"><strong><%= kv[0] %></strong></td>
-                    <% } %>
-                    </td>
-                    <td class="p-3 align-text-top"><%= kv[1].docstring %></td>
-                </tr>
-            <% }); %>
+                <% Object.entries(config).filter(kv=> kv[1].docstring).map(kv => { %>
+                    <tr class="odd:bg-gray-100">
+                        <% if (kv[0]===DEFAULT_CONFIG_KEY) { %>
+                        <td class="p-3"><em>By default, <%= title %></em></td>
+                        <% } else { %>
+                        <td class="p-3 align-text-top"><strong>
+                            <a class="underline underline-offset-2" href="<%= new URL(kv[0], BASE_URL) %>" target="_blank">
+                                <%= kv[0] %>
+                            </a>
+                        </strong></td>
+                        <% } %>
+                        <td class="p-3 align-text-top">
+                            <%= kv[1].docstring %>
+                        </td>
+                    </tr>
+                    <% }); %>
             </tbody>
         </table>
-        <p class="px-3 mt-10 text-gray-500 text-sm">See source code <a href="https://github.com/benclmnt/rick" target="_blank">here</a></p>
+        <p class="px-3 mt-10 text-gray-500 text-sm">See 
+            <a class="underline decoration-blue-500 underline-offset-2" href="https://github.com/benclmnt/rick" target="_blank">source code here</a>
+        </p>
     </div>
 </body>
+
 </html>

@@ -11,8 +11,9 @@ const yaml = require('yaml');
 const path = require('path');
 const fs = require('fs');
 const ejs = require('ejs');
-const project = require('../package.json');
+const projectInfo = require('../package.json');
 
+const BASE_URL = 'https://rick.benclmnt.com';
 const DEFAULT_CONFIG_KEY = '$default$';
 const inYmlFilePath = '../rick.config.yml';
 const outJsonFilePath = '../src/config.json';
@@ -53,32 +54,45 @@ try {
  */
 function flatten(obj, command, newObj) {
   for (let [key, value] of Object.entries(obj)) {
-    if (key === '_leaf') {
-      newObj[command] = obj['_leaf'];
+    if (typeof value !== 'object') {
+      /*
+      we hit the leaf and do not find 'base_url' property
+      means this is using the <string,string> shortcut for an equivalent, i.e.
+      `a: https://www.example.com`
+      vs
+      `
+      a:
+        base_url: https://www.example.com
+      `
+      */
+      value = {
+        base_url: value,
+      };
+    }
 
-      if (!newObj[command].type) {
+    let cmd = `${command} ${key === '_leaf' ? '' : key}`.trim();
+    if (value['base_url']) {
+      newObj[cmd] = value;
+
+      if (!newObj[cmd].type) {
         let autoinfer;
-        if ('q_params' in newObj[command]) {
+        if ('q_params' in newObj[cmd]) {
           autoinfer = 'querystring';
+        } else if (value['base_url'].includes('{{')) {
+          autoinfer = 'path';
         } else {
           autoinfer = 'redirect';
         }
         console.info(
-          `[Info] Missing type in ${command}, rick infers '${autoinfer}'.`,
+          `[Info] Missing type in ${cmd}, rick infers '${autoinfer}'.`,
         );
-        newObj[command].type = autoinfer;
+        newObj[cmd].type = autoinfer;
       }
 
-      if (!newObj[command].base_url) {
-        throw new Error(
-          `Missing base url in ${command}. Check your config.yml again`,
-        );
-      }
-
-      _treatQueryBased(newObj[command]);
-      _treatPathBased(newObj[command]);
+      _treatQueryBased(newObj[cmd]);
+      _treatPathBased(newObj[cmd]);
     } else {
-      flatten(value, `${command} ${key}`.trim(), newObj);
+      flatten(value, cmd, newObj);
     }
   }
 }
@@ -151,12 +165,13 @@ let env = process.env.NODE_ENV || 'development';
 ejs.renderFile(
   'src/resources/cmdlist.ejs',
   {
+    BASE_URL,
     config: flattenedConfig,
     css: fs.readFileSync(path.join(__dirname, `../dist/tailwind.${env}.css`), {
       encoding: 'utf-8',
     }),
     DEFAULT_CONFIG_KEY,
-    project,
+    title: projectInfo.name,
   },
   { root: './src' },
   function(err, html) {
