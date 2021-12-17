@@ -1,84 +1,27 @@
 # config files
 ---
 $default$:
-  _leaf:
-    base_url: "https://www.google.com/search"
-    q_params: "q"
-    docstring: "does a google search"
+  base_url: 'https://www.google.com/search'
+  q_params: 'q'
+  docstring: 'does a google search'
 g:
-  _leaf:
-    base_url: "https://www.google.com/search"
-    docstring: "does a google search"
-    q_params: "q"
-bib:
-  _leaf:
-    base_url: "https://alkitab.sabda.org/bible.php"
-    docstring: "opens a chapter from the (indonesian) bible"
-    q_params:
-      - "book"
-      - "chapter"
-cf:
-  _leaf:
-    base_url: "https://dash.cloudflare.com/"
-    docstring: "navigates to cloudflare dashboard"
-doc:
-  py:
-    _leaf:
-      base_url: "https://docs.python.org/3/search.html"
-      docstring: "does a python doc search"
-      q_params: "q"
-  mdn:
-    _leaf:
-      base_url: "https://developer.mozilla.org/en-US/search"
-      docstring: "does a MDN search"
-      q_params: "q"
+  base_url: 'https://www.google.com/search'
+  docstring: 'does a google search'
+  q_params: 'q'
+cf: 'https://dash.cloudflare.com/'
 gh:
-  _leaf:
-    base_url: "https://github.com/{{ acc }}/{{ repo }}"
-    docstring: "does a github search."
-    type: "path"
-  home:
-    _leaf:
-      base_url: "https://github.com/benclmnt"
-nus:
-  lum:
-    _leaf:
-      base_url: "https://luminus.nus.edu.sg/modules/{{ modules }}/{{ tab }}"
-      docstring: "navigates to modules in luminus"
-      type: "path"
-      modules:
-        2100: "edde22e8-413b-45a4-b2c5-9a948c23689d"
-        2101: "895148ac-63ef-4044-acf4-1ec29068d9e0"
-      tab:
-        a: "announcements"
-        f: "files"
-        g: "gradebook"
-        l: "conferencing"
-        m: "multimedia"
-        q: "quiz"
-  cm:
-    _leaf:
-      base_url: "https://coursemology.org/courses/{{ course_no }}"
-      docstring: "navigates to coursemology courses"
-      type: "path"
-      course_no:
-        2102: "1904"
-so:
-  _leaf:
-    base_url: "https://stackoverflow.com/search"
-    q_params: "q"
-    docstring: "does a stack overflow search"
-soc:
-  curr:
-    _leaf:
-      base_url: "https://www.comp.nus.edu.sg/cugresource/per-cohort/cs/cs-19-20/"
-      docstring: "views NUS SoC graduation requirement"
-  sched:
-    _leaf:
-      base_url: "https://www.comp.nus.edu.sg/cugresource/soc-sched/"
-      docstring: "views NUS SoC course schedule"
+  base_url: 'https://github.com/{{ acc }}/{{ repo }}'
+  docstring: 'does a github search.'
+  acc:
+    home: 'benclmnt'
 yt:
-  _leaf:
-    base_url: "https://www.youtube.com/results"
-    q_params: "search_query"
-    docstring: "does a youtube search"
+  _leaf: 'https://www.youtube.com'
+  v:
+    base_url: 'https://www.youtube.com/results'
+    q_params: 'search_query'
+    docstring: 'does a youtube search'
+tr:
+  en:
+    base_url: 'https://translate.google.com/?sl=auto&tl=en'
+    q_params: 'text'
+    docstring: 'does a translation to english'

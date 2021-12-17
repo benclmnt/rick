@@ -13,9 +13,10 @@ yarn-*.log
 
 # secrets
 rick.config.yml
+wrangler.toml
+.envrc
 
 # Compiled version of yml and ejs files
 src/config.json
 src/resources/cmdlist.html
 
-wrangler.toml
