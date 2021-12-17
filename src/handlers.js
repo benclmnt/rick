@@ -27,7 +27,9 @@ export class BaseHandler {
   }
 
   async handle(tokens) {
-    throw new Error("Method 'handle(tokens)' must be implemented.");
+    return new Response("Method 'handle(tokens)' NOT implemented.", {
+      status: 500,
+    });
   }
 }
 

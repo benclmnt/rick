@@ -22,8 +22,35 @@ const configFile = fs.readFileSync(
   path.join(__dirname, inYmlFilePath),
   'utf-8',
 );
-const config = yaml.parse(configFile);
+let config;
+try {
+  config = yaml.parse(configFile);
+} catch (e) {
+  console.error(e);
+  process.exit(1);
+}
 
+/**
+ * @typedef BaseFlatConfig
+ * @type {{ base_url: string, type: string, docstring: ?string }}
+ *
+ * @typedef QueryFlatConfig
+ * @type {{ base_url: string, type: string, docstring: ?string, q_params: string[] }}
+ *
+ * @typedef PathOptions
+ * @type {{ Object.<string, Object.<string, string>> }}
+ *
+ * @typedef PathFlatConfig
+ * @type {{ base_url: string, type: string, docstring: ?string, keywords: string[], options: PathOptions }}
+ */
+
+/**
+ * A recursive function to generate `config.json`
+ *
+ * @param {string} command
+ * @param {Object} obj
+ * @param {Object.<string, (BaseFlatConfig|QueryFlatConfig|PathFlatConfig)>} newObj
+ */
 function flatten(obj, command, newObj) {
   for (let [key, value] of Object.entries(obj)) {
     if (key === '_leaf') {
@@ -58,8 +85,9 @@ function flatten(obj, command, newObj) {
 
 /**
  * Functions to augment query config obj
+ * @param {BaseFlatConfig} obj
  */
-function _treatQueryBased(obj = {}) {
+function _treatQueryBased(obj) {
   if (obj.type !== 'querystring') {
     return;
   }
@@ -71,16 +99,17 @@ function _treatQueryBased(obj = {}) {
 
 /**
  * Functions to augment path config obj
+ *  @param {BaseFlatConfig} obj
  */
-function _treatPathBased(obj = {}) {
+function _treatPathBased(obj) {
   if (obj.type !== 'path') {
     return;
   }
 
   // match {{ keyword }}
   let regexp = /{{\s*(.*?)\s*}}/g;
-  keywords = [...obj.base_url.matchAll(regexp)].map(x => x[1]);
-  options = {};
+  let keywords = [...obj.base_url.matchAll(regexp)].map(x => x[1]);
+  let options = {};
 
   // sanity check that all keyword has known options, then move it to options.
   for (let keyword of keywords) {
@@ -96,11 +125,13 @@ function _treatPathBased(obj = {}) {
   }
 
   // assign options back to obj
-  obj.keywords = keywords;
-  obj.options = options;
+  let pathObj = /** @type {PathFlatConfig} */ (obj);
+  pathObj.keywords = keywords;
+  pathObj.options = options;
 }
 
 // flatten the tree and write to json file
+/** @type {Object.<string, (BaseFlatConfig|QueryFlatConfig|PathFlatConfig)>} */
 let flattenedConfig = {};
 flatten(config, '', flattenedConfig);
 

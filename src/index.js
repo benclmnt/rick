@@ -48,6 +48,11 @@ function extractQuery(urlString) {
   return query;
 }
 
+/**
+ *
+ * @param {string} query
+ * @returns {string[]}
+ */
 function tokenize(query) {
   // split on whitespaces and remove falsy values (empty string)
   let tokens = query.split(/\s+/).filter(c => c);
