@@ -5,23 +5,24 @@
   "description": "Your personalized search engine",
   "main": "index.js",
   "scripts": {
-    "css:prod": "pnpx tailwindcss --minify -i ./src/resources/tailwind.css -c ./tailwind.config.js -o ./dist/tailwind.production.css",
+    "css:prod": "pnpm --package=autoprefixer@^10.0.2 --package=postcss@^8.3.3 --package=tailwindcss@^3.0.0 dlx tailwindcss --minify -i ./src/resources/tailwind.css -c ./tailwind.config.js -o ./dist/tailwind.production.css",
     "fmt": "prettier --write '**/*.{js,css,json,md}'",
     "start": "pnpm prep && RUST_BACKTRACE=1 pnpm wrangler dev",
     "prep": "node scripts/prepare.js",
     "preview": "NODE_ENV=production pnpm prep && pnpm wrangler preview --watch",
-    "publish": "pnpm css:prod && NODE_ENV=production pnpm prep && pnpm wrangler publish",
+    "publish": "NODE_ENV=production pnpm prep && pnpm wrangler publish",
     "test": "echo \"Error: no test specified\" && exit 1"
   },
   "author": "Bennett Clement <ben@benclmnt.com>",
   "license": "MIT",
   "devDependencies": {
-    "ejs": "^3.1.5",
+    "ejs": "^3.1.6",
     "html-loader": "^1.3.2",
-    "prettier": "^1.18.2",
+    "prettier": "^1.19.1",
     "raw-loader": "^4.0.2",
     "source-map-loader": "^1.1.3",
-    "url-parse": "^1.5.2",
-    "yaml": "^1.10.0"
+    "url-parse": "^1.5.4",
+    "webpack": "^5.65.0",
+    "yaml": "^1.10.2"
   }
 }
