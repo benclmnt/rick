@@ -113,7 +113,7 @@ export class QueryBasedHandler extends BaseHandler {
     let url = new URL(this.base_url);
 
     // attempting to merge any extra tokens with the last token
-    if (tokens.length > this.q_params.length) {
+    if (tokens.length > this.q_params.length && this.q_params.length > 0) {
       tokens[this.q_params.length - 1] = tokens
         .slice(this.q_params.length - 1)
         .join(' ');
@@ -138,12 +138,12 @@ export class QueryBasedHandler extends BaseHandler {
       // for both cases, we ignore the result from querystringFromUrl
     }
 
-    this.q_params.map((param, idx) =>
-      url.searchParams.append(
-        param,
-        tokens[idx] !== undefined ? tokens[idx] : '',
-      ),
-    );
+    this.q_params.map((param, idx) => {
+      // ignore params if there is not enough tokens
+      if (tokens[idx]) {
+        url.searchParams.append(param, tokens[idx]);
+      }
+    });
     return redirect(url.href);
   }
 }
@@ -170,19 +170,19 @@ export class PathBasedHandler extends BaseHandler {
         break;
       }
 
-      let regexp = new RegExp(`{{\\s*${key}\\s*}}`, 'gi');
-      urlstring = urlstring.replace(
-        regexp,
-        this.options[key] !== undefined && token in this.options[key]
-          ? this.options[key][token]
-          : token,
-      );
+          let regexp = new RegExp(`{{\\s*${key}\\s*}}`, 'gi');
+          urlstring = urlstring.replace(
+            regexp,
+            this.options[key] !== undefined && token in this.options[key]
+            ? this.options[key][token]
+            : token,
+          );
+        }
+
+          return redirect(new URL(urlstring).href);
+        }
     }
 
-    return redirect(new URL(urlstring).href);
-  }
-}
+    const app = new MainHandler();
 
-const app = new MainHandler();
-
-export default app;
+    export default app;
