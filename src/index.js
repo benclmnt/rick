@@ -16,6 +16,7 @@ async function handleRequest(request) {
     });
   }
 
+  /**
   if (requestUrl.pathname === '/_opensearch') {
     const { default: openSearchDescription } = await import(
       './resources/_opensearch.xml'
@@ -24,6 +25,7 @@ async function handleRequest(request) {
       headers: { 'content-type': 'application/xml' },
     });
   }
+  */
 
   const query = extractQuery(request.url);
   const tokens = tokenize(query);
