@@ -10,15 +10,16 @@
     "start": "pnpm prep && RUST_BACKTRACE=1 pnpm wrangler dev",
     "prep": "node scripts/prepare.js",
     "preview": "NODE_ENV=production pnpm prep && pnpm wrangler preview --watch",
-    "publish": "NODE_ENV=production pnpm prep && pnpm wrangler publish",
+    "publish": "NODE_ENV=production pnpm prep && pnpm wrangler deploy",
     "test": "echo \"Error: no test specified\" && exit 1"
   },
   "author": "Bennett Clement <ben@benclmnt.com>",
   "license": "MIT",
   "devDependencies": {
-    "ejs": "^3.1.6",
+    "ejs": "^3.1.10",
     "prettier": "^1.19.1",
     "url-parse": "^1.5.10",
+    "wrangler": "^3.53.1",
     "yaml": "^1.10.2"
   }
 }
